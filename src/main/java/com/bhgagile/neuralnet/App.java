@@ -1,13 +1,24 @@
 package com.bhgagile.neuralnet;
 
 /**
- * Hello world!
+ * Base class.
  *
  */
-public class App 
-{
-    public static void main( String[] args )
-    {
-        System.out.println( "Hello World!" );
+public final class App {
+
+    /**
+     * Not for instantiation.
+     */
+    private App() {
+        super();
+    }
+
+    /**
+     * Main.
+     * @param args command line params
+     */
+    public static void main(final String[] args) {
+
+        System.out.println("Hello World!");
     }
 }
