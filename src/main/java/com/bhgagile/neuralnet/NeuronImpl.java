@@ -7,7 +7,6 @@
  */
 package com.bhgagile.neuralnet;
 
-import java.util.List;
 
 /**
  * @author Barnaby Golden
@@ -27,9 +26,9 @@ public final class NeuronImpl extends AbstractNeuron<Float, Float> {
      * {@inheritDoc}
      */
     @Override
-    Output<Float> process(final List<Output<Float>> outputs) {
+    public void process() {
 
-        return getProcessor().process(outputs);
+        setOutput(getProcessor().process(getUpstreamInputs()));
     }
 
 }

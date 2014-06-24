@@ -7,6 +7,8 @@
  */
 package com.bhgagile.neuralnet;
 
+import static org.junit.Assert.assertEquals;
+
 import org.junit.Test;
 
 /**
@@ -21,10 +23,14 @@ public final class NeuronTest {
     @Test
     public void neuronProcess() {
 
-        final Neuron neuron1 = new NeuronImpl(new SumProcessor());
+        final Neuron<Float, Float> neuron1 =
+                        new NeuronImpl(new SumProcessor());
 
-        final Neuron neuron2 = new NeuronImpl(new FlatValueProcessor(5.0f));
+        final Neuron<Float, Float> neuron2 =
+                        new NeuronImpl(new FlatValueProcessor(5.0f));
 
         neuron1.addUpstreamNeuron(neuron2);
+
+        assertEquals("Unexpected output", 5.0f, neuron1.getOutput());
     }
 }

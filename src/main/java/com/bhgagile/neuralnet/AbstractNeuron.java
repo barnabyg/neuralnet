@@ -16,7 +16,7 @@ import java.util.List;
  * @param <I> Input type
  * @param <O> Output type
  */
-public abstract class AbstractNeuron<I, O> implements Neuron {
+public abstract class AbstractNeuron<I, O> implements Neuron<I, O> {
 
     /**
      * Processor.
@@ -25,7 +25,11 @@ public abstract class AbstractNeuron<I, O> implements Neuron {
     /**
      * List of upstream neurons.
      */
-    private final List<Neuron> upstreamNeurons;
+    private final List<Neuron<?, I>> upstreamNeurons;
+    /**
+     * Output from the neuron.
+     */
+    private Output<O> output;
 
     /**
      * Processor is required for construction.
@@ -35,15 +39,8 @@ public abstract class AbstractNeuron<I, O> implements Neuron {
 
         this.processor = processor;
 
-        upstreamNeurons = new ArrayList<Neuron>();
+        upstreamNeurons = new ArrayList<Neuron<?, I>>();
     }
-
-    /**
-     * Do processing and return output.
-     * @param outputs the list of outputs fed in to the processor
-     * @return output
-     */
-    abstract Output<O> process(List<Output<I>> outputs);
 
     /**
      * Get processor for neuron.
@@ -57,9 +54,39 @@ public abstract class AbstractNeuron<I, O> implements Neuron {
     /**
      * {@inheritDoc}
      */
-    public final void addUpstreamNeuron(final Neuron neuron) {
+    public final void addUpstreamNeuron(final Neuron<?, I> neuron) {
 
         upstreamNeurons.add(neuron);
     }
 
+    /**
+     * Get the list of upstream inputs.
+     * To be used by the processor when calculating output.
+     * @return list of upstream inputs
+     */
+    protected final List<Output<I>> getUpstreamInputs() {
+
+        final List<Output<I>> list = new ArrayList<Output<I>>();
+
+        for (Neuron<?, I> upInp: upstreamNeurons) {
+            list.add(upInp.getOutput());
+        }
+
+        return list;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public final Output<O> getOutput() {
+        return output;
+    }
+
+    /**
+     * Set the output.
+     * @param output output
+     */
+    protected final void setOutput(final Output<O> output) {
+        this.output = output;
+    }
 }
