@@ -69,6 +69,7 @@ public abstract class AbstractNeuron<I, O> implements Neuron<I, O> {
         final List<Output<I>> list = new ArrayList<Output<I>>();
 
         for (Neuron<?, I> upInp: upstreamNeurons) {
+            upInp.process();
             list.add(upInp.getOutput());
         }
 

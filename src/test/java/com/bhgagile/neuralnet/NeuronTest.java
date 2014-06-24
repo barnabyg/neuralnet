@@ -30,7 +30,9 @@ public final class NeuronTest {
                         new NeuronImpl(new FlatValueProcessor(5.0f));
 
         neuron1.addUpstreamNeuron(neuron2);
+        neuron1.process();
 
-        assertEquals("Unexpected output", 5.0f, neuron1.getOutput());
+        assertEquals(
+            "Unexpected output", 5.0f, neuron1.getOutput().getValue(), 0);
     }
 }
